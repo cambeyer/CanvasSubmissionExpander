@@ -1,5 +1,5 @@
-const unzip = require('unzip');
-const fs = require('fs');
+const unzip = require('unzipper');
+const fs = require('fs-extra');
 const path = require('path');
 
 const canvasGeneratedZipFile = process.argv.splice(process.execArgv.length + 2).join(' ');
@@ -17,7 +17,7 @@ const entryParser = (entry, destPath) => {
     dirPath = path.dirname(finalPath);
     fileName = path.basename(finalPath);
     if (entry.type === 'File') {
-        fs.mkdir(dirPath, { recursive: true }, () => {
+        fs.mkdirs(dirPath, () => {
             if (!fileName.endsWith('.zip')) {
                 entry.pipe(fs.createWriteStream(finalPath));
             } else {
